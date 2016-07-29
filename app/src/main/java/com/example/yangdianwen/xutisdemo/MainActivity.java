@@ -2,7 +2,9 @@ package com.example.yangdianwen.xutisdemo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -11,11 +13,13 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
+
 /***
  *使用xutils框架进行网络请求 关联布局id
  *使用其中的viewutils关联id ViewUtils.inject()方法进行初始化
  *使用httpUtils进行网络请求,使用该类会出现apache的httpRequestBase类未找到的异常,
- *  解决方案：在build.gradle中添加以下代码：
+ *  解决方案:在build.gradle中添加以下代码：
  *       android {
  *                 useLibrary 'org.apache.http.legacy'
  *                 compileSdkVersion 23
@@ -33,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //初始化ViewUtils
         ViewUtils.inject(this);
+
         //初始化HttpUtils
         HttpUtils http = new HttpUtils();
         //调用send方法（三个参数）（请求方式，url，请求回调（RequestCallBack））
@@ -54,5 +59,10 @@ public class MainActivity extends AppCompatActivity {
                     public void onFailure(HttpException error, String msg) {
                     }
                 });
+    }
+    //点击事件的注册
+    @OnClick(R.id.tv)
+    public void testButtonClick(View v) { // 方法签名必须和接口中的要求一致
+        Toast.makeText(MainActivity.this, "点击事件", Toast.LENGTH_SHORT).show();
     }
 }
