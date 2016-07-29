@@ -12,12 +12,17 @@
     <TextView
         android:id="@+id/tv"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="30dp"
         android:text="Hello World!" />
     <TextView
         android:layout_below="@+id/tv"
         android:id="@+id/tv1"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:text="Hello World!" />
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_below="@+id/tv1"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
 </RelativeLayout>

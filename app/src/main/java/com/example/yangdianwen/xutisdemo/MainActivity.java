@@ -2,12 +2,17 @@ package com.example.yangdianwen.xutisdemo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lidroid.xutils.BitmapUtils;
+import com.lidroid.xutils.DbUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.exception.DbException;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
@@ -29,8 +34,10 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 //"http://www.lidroid.com",
+private static final String TAG = "MainActivity";
     @ViewInject(R.id.tv) TextView testTextView;
     @ViewInject(R.id.tv1) TextView textView;
+    @ViewInject(R.id.iv)ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +66,24 @@ public class MainActivity extends AppCompatActivity {
                     public void onFailure(HttpException error, String msg) {
                     }
                 });
+        //使用BitmapUtils加载图片
+        BitmapUtils bitmapUtils = new BitmapUtils(this);
+        //display方法（传入两个参数 imageView控件,图片的来源url）
+        bitmapUtils.display(imageView,"http://bbs.lidroid.com/static/image/common/logo.png");
+        //使用DbUtils类创建数据库
+        DbUtils dbUtils=DbUtils.create(this);
+        User user=new User();
+        user.setEmail("xxx@qq.com");
+        user.setName("adsad");
+        try {
+            //调用保存方法
+            dbUtils.save(user);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        //获取数据库的路径
+        String path = dbUtils.getDatabase().getPath();
+        Log.d(TAG, "onCreate:...... "+path);
     }
     //点击事件的注册
     @OnClick(R.id.tv)
